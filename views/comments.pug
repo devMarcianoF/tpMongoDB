@@ -1,0 +1,19 @@
+extends layout.pug
+
+block content
+    div.container
+        h1 Commentaires
+        if article.comments && article.comments.length > 0
+            ul.comment-list
+                each comment in article.comments
+                    li.comment-item
+                        p.comment-content= comment.content
+                        p.comment-author= `Par ${comment.author} - ${comment.createdAt}`
+        else
+            p Aucun commentaire.
+        form(action=`/api/articles/${article._id}/comments`, method="POST")
+            .form-group
+                textarea.form-input(name="content", cols="20", rows="5", placeholder="Contenu")
+            .form-group
+                input.form-input(type="text", name="author", placeholder="Auteur")
+            button.btn.btn-primary(type="submit") Ajouter
